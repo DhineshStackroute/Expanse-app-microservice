@@ -8,7 +8,6 @@ const auth = require('../auth/auth')
 // define  a method to add a new user
 
 const registerUser = async (userInfo) => {
-
     let newUser = new UserModel();
     newUser.userId = uuid.v4();
     newUser.name = userInfo.name;
@@ -18,11 +17,9 @@ const registerUser = async (userInfo) => {
     try {
         const response = await newUser.save();
         return response;
-    }
-    catch (err) {
+    } catch (err) {
         throw err;
     }
-
 }
 
 const loginUser = async (loginInfo) => {
