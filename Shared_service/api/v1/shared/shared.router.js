@@ -1,25 +1,37 @@
 
 const router = require('express').Router();
-const sharedController= require('./shared.controller')
+const {prismaClient} = require('@prisma/client');
+
+const prisma= new prismaClient();
 
 router.get('/', async (req, res) => {
     
-    try {
-        const response = await sharedController.getAllShared();
-        res.send(response);
-    } catch (err) {
-        res.status(500).send(err);
-    }   
+    const sahred= await prisma.shared.findMany();
+    res.send(sahred);
+   
 })
 
 router.post('/', async(req, res) => {
     
-    try {
-        const response = await sharedController.addShared(req.body);
-        res.send(response);
-    } catch (err) {
-        res.status(500).send(err);
-    }
+    const {
+        sharedId,
+        expanseId,
+        amount,
+        sharedamout,
+        paidby,
+        noofShare
+    }= req.body;
+    const response = await prisma.shared.create({
+        data: {
+            sharedId,
+            expanseId,
+            amount,
+            sharedamout,
+            paidby,
+            noofShare
+        }
+    })
+    res.send(response);
 })
 
 module.exports={

@@ -19,5 +19,4 @@ model shared{
   sharedamout Int
   paidby String
   noofShare Int
-
-}
+  }
