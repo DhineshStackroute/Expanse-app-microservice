@@ -1,0 +1,20 @@
+[2026-04-01T15:55:58.511] [INFO] default - Connecting to Database
+[2026-04-01T15:55:58.551] [INFO] default - Setting Middleware
+[2026-04-01T15:55:58.553] [INFO] default - Setting API
+[2026-04-01T15:56:28.952] [INFO] default - {
+  expenseId: 'f29c5601-cbf4-4a26-99f6-0168641dbd5e',
+  exapnseDetails: 'dinner',
+  amount: 500,
+  spenon: 2026-04-01T10:25:58.444Z,
+  _id: new ObjectId('69ccf2d44ade72432ffcaffb'),
+  __v: 0
+}
+[2026-04-01T15:57:26.896] [INFO] default - Connecting to Database
+[2026-04-01T15:57:26.932] [INFO] default - Setting Middleware
+[2026-04-01T15:57:26.935] [INFO] default - Setting API
+[2026-04-01T16:00:04.398] [INFO] default - Connecting to Database
+[2026-04-01T16:00:04.436] [INFO] default - Setting Middleware
+[2026-04-01T16:00:04.438] [INFO] default - Setting API
+[2026-04-01T16:16:14.900] [INFO] default - Connecting to Database
+[2026-04-01T16:16:14.986] [INFO] default - Setting Middleware
+[2026-04-01T16:16:14.991] [INFO] default - Setting API
