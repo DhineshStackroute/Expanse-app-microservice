@@ -37,3 +37,6 @@
   _id: new ObjectId('69ce18fde20d43eaa814d308'),
   __v: 0
 }
+[2026-04-02T17:13:09.696] [INFO] default - Connecting to Database
+[2026-04-02T17:13:09.762] [INFO] default - Setting Middleware
+[2026-04-02T17:13:09.765] [INFO] default - Setting API
