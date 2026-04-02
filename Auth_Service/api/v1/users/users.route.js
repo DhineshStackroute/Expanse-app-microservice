@@ -1,18 +1,23 @@
 const router = require('express').Router();
 
 const userCtrl = require('./users.controller')
-
-router.post('/register', (req, res) => {
-
-    const response = userCtrl.addUser(req.body);
-    res.send(response);
+router.post('/register', async (req, res) => {
+    try {
+        const response = await userCtrl.addUser(req.body);
+        res.send(response);
+    } catch (err) {
+        res.status(500).send(err);
+    }
 })
 
 
-router.post('/login', (req, res) => {
-    const response = userCtrl.loginUser(req.body);
-    res.send(response);
-
+router.post('/login', async (req, res) => {
+    try {
+        const response = await userCtrl.validateUser(req.body);
+        res.send(response);
+    } catch (err) {
+        res.status(500).send(err);
+    }
 })
 
 module.exports = {

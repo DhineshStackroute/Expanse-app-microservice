@@ -1,37 +1,47 @@
 // custome Middlewares to validae and verify the Users
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { authconfig } = require('../../../config').appConfig;
+const { authConfig } = require('../../../config').appConfig;
 
 // method to handle the password comparion
-const comparePassword = (givenPassword, savedPassword, next) => {
-    bcrypt.compare(givenPassword, savedPassword, (err, isMatch) => {
-        if (err) {
-            return next(err);
-        }
-        next(null, isMatch);
-    })
+const comparePassword = async (givenPassword, savedPassword) => {
+
+    try {
+        const isMatch = await bcrypt.compare(givenPassword, savedPassword);
+        // next(null, isMatch);
+        return isMatch
+    } catch (err) {
+        // next(err);
+        return false
+    }
 }
 
 // method to create a token
-const genrateToken = (payload, done) => {
-
-    jwt.sign(payload, authconfig.jwtSecret, { expiresIn: '1h' }, done);
+const genrateToken = async (payload) => {
+    const token = await new Promise((resolve, reject) => {
+        jwt.sign(payload, authConfig.jwtSecret, { expiresIn: '1h' }, (err, token) => {
+            if (err) {
+                reject(err);
+            }
+            resolve(token);
+        });
+    });
+    return token;
 }
 
-const isAuthenticatedUser = (req, res, next) => {
+const isAuthenticatedUser = async (req, res, next) => {
     const autherizationHeader = req.get('Authorization');
     if (!autherizationHeader) {
         return res.status(401).send({ error: 'No token provided' });
     }
     const token = autherizationHeader.split(' ')[1];
-    jwt.verify(token, authconfig.jwtSecret, (err, decoded) => {
-        if (err) {
-            return res.status(401).send({ error: 'Invalid token' });
-        }
+    try {
+        const decoded = await jwt.verify(token, authConfig.jwtSecret);
         req.user = decoded;
         next();
-    })
+    } catch (err) {
+        return res.status(401).send({ error: 'Invalid token' });
+    }
 }
 module.exports = {
     comparePassword,

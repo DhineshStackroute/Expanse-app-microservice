@@ -7,7 +7,7 @@ const serverConfiguration = {
 
 // define the db 
 const dbConfig = {
-    mongoDbUrl: "mongodb://localhost:27017/ExpanseManagers"
+    mongoDbUrl: "mongodb://localhost:27017/ExpanseManagers-expanse"
 }
 
 // 

@@ -24,32 +24,28 @@ const registerUser = async (userInfo) => {
 
 const loginUser = async (loginInfo) => {
     try {
-        const response = await UserModel.findOne({ email: loginInfo.email }, (err, foundUser) => {
-            if (err) {
-                return err;
-            }
-            else {
-                auth.comparePassword(userInfo.password, foundUser.password, (err, isMatch) => {
-                    if (isMatch && !err) {
-                        let userToken = ""
-                        let payload = {
-                            userName: foundUser.name,
-                            userId: foundUser.userId,
-                            userRole: "admin"
-                        }
-                        auth.genrateToken(payload, (token, err) => {
-                            if (!err) {
-                                userToken = token;
-                            }
-                        });
-                        return userToken;
-                    }
-                    else {
-                        return err;
-                    }
-                })
-            }
-        })
+        const foundUser = await UserModel.findOne({ email: loginInfo.email });
+
+        if (!foundUser) {
+            throw new Error('User not found');
+        }
+
+        const isMatch = await auth.comparePassword(loginInfo.password, foundUser.password);
+
+        if (!isMatch) {
+            throw new Error('Incorrect password');
+        }
+
+        const payload = {
+            userName: foundUser.name,
+            userId: foundUser.userId,
+            userRole: "admin"
+        }
+
+        const userToken = await auth.genrateToken(payload);
+console.log("dao", userToken);
+
+        return userToken;
     }
     catch (err) {
         throw err;
