@@ -2,7 +2,8 @@
 const db= require('./db');
 const bodyparser= require('body-parser')
 const logger= require('./logger')
-
+const helmat = require('helmet');
+const cors= require('cors');
 const rateLimit = require("express-rate-limit");    
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -26,10 +27,28 @@ const connectToDatabase= ()=>{
 // set the middleware required for app
 
 const setMiddleWare=(app)=>{
+
     logger.info("Setting Middleware");
     app.use(bodyparser.json());
     app.use(bodyparser.urlencoded({extended:false}))
     app.use(limiter);
+    app.use(helmat(
+        {
+           contentSecurityPolicy: flase,
+           xDownloadOptions: false,
+           crossOriginEmbedderPolicy: false
+
+        }
+    ))
+    app.use(cors(
+        {
+            allowedHeaders: "*",
+            exposedHeaders: "*",
+            origin: "*",
+            methods: "*",
+            credentials: true
+        }
+    ));
 }
 
 // set the application middleware

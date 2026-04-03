@@ -2,14 +2,16 @@
 const router = require('express').Router();
 const rateLimit = require("express-rate-limit");    
 const expanseController = require('./expanse.controller')
+const cors= require('cors');
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 200, // limit each IP to 100 requests per windowMs
-    message: "Too many requests, please try again later."
+    message: "Too many requests, please try again later.",
+    standardHeaders: true,
+    legacyHeaders: false
 })
 router.use(limiter);
-
 
 // defien the get Route
 router.post("/", (req, res) => {

@@ -10,7 +10,13 @@ const validateUser = async (userdetails) => {
     return response;
 }
 
+const getALlUsers = async () => {
+    const response = await userDAO.getAllUsers();
+    return response;
+}
+
 module.exports={
     addUser,
-    validateUser
+    validateUser,
+    getALlUsers
 }

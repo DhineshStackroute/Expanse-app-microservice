@@ -51,7 +51,17 @@ console.log("dao", userToken);
         throw err;
     }
 }
+
+const getAllUsers = async () => {
+    try {
+        const response = await UserModel.find();
+        return response;
+    } catch (err) {
+        throw err;
+    }
+}
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    getAllUsers
 }
