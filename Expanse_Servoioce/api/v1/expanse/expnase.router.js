@@ -1,9 +1,17 @@
 // Creare a Expanse Router to handle the req and response
 const router = require('express').Router();
-
+const rateLimit = require("express-rate-limit");    
 const expanseController = require('./expanse.controller')
-// defien the get Route
 
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 200, // limit each IP to 100 requests per windowMs
+    message: "Too many requests, please try again later."
+})
+router.use(limiter);
+
+
+// defien the get Route
 router.post("/", (req, res) => {
 
     try {

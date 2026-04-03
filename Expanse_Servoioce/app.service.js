@@ -3,7 +3,14 @@ const db= require('./db');
 const bodyparser= require('body-parser')
 const logger= require('./logger')
 
-
+const rateLimit = require("express-rate-limit");    
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 200, // limit each IP to 100 requests per windowMs
+    message: "Too many requests, please try again later.",
+    standardHeaders: true,
+    legacyHeaders: false
+})
 const api= require('./api/v1')
 
 // include all middleware in a services
@@ -22,6 +29,7 @@ const setMiddleWare=(app)=>{
     logger.info("Setting Middleware");
     app.use(bodyparser.json());
     app.use(bodyparser.urlencoded({extended:false}))
+    app.use(limiter);
 }
 
 // set the application middleware
