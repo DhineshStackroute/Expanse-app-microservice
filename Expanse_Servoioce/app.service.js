@@ -12,6 +12,10 @@ const limiter = rateLimit({
     standardHeaders: true,
     legacyHeaders: false
 })
+
+// impoet the auth serice
+
+const authMiddleware =require('../AuthMiddleware/auth/auth')
 const api= require('./api/v1')
 
 // include all middleware in a services
@@ -34,7 +38,7 @@ const setMiddleWare=(app)=>{
     app.use(limiter);
     app.use(helmat(
         {
-           contentSecurityPolicy: flase,
+           contentSecurityPolicy: false,
            xDownloadOptions: false,
            crossOriginEmbedderPolicy: false
 
@@ -49,6 +53,8 @@ const setMiddleWare=(app)=>{
             credentials: true
         }
     ));
+
+    app.use(authMiddleware.isAuthenticatedUser);
 }
 
 // set the application middleware
